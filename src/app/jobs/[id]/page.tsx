@@ -150,9 +150,9 @@ export default function JobDetailPage() {
                 {job.company.charAt(0)}
               </span>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <h1
-                className="text-2xl md:text-4xl text-white font-semibold"
+                className="text-2xl md:text-4xl text-white font-semibold break-words"
                 style={{ fontFamily: "var(--font-clash)" }}
               >
                 {job.title}
@@ -184,7 +184,7 @@ export default function JobDetailPage() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-[124px] py-10">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {/* Description */}
             <div className="bg-white p-6 md:p-8 border border-border mb-6">
               <h2
@@ -193,7 +193,7 @@ export default function JobDetailPage() {
               >
                 Description
               </h2>
-              <p className="text-text leading-relaxed whitespace-pre-line">
+              <p className="text-text leading-relaxed whitespace-pre-line break-words overflow-wrap-anywhere">
                 {job.description}
               </p>
             </div>
@@ -214,7 +214,7 @@ export default function JobDetailPage() {
                         className="text-primary shrink-0 mt-0.5"
                         size={18}
                       />
-                      <span className="text-text leading-relaxed">{req}</span>
+                      <span className="text-text leading-relaxed break-words min-w-0">{req}</span>
                     </li>
                   ))}
                 </ul>
@@ -373,7 +373,7 @@ export default function JobDetailPage() {
           </div>
 
           {/* Sidebar */}
-          <aside className="lg:w-[320px] shrink-0">
+          <aside className="lg:w-[320px] shrink-0 min-w-0">
             {/* Job Overview */}
             <div className="bg-white p-6 border border-border mb-6">
               <h3
@@ -387,18 +387,18 @@ export default function JobDetailPage() {
                   <div className="w-10 h-10 bg-primary/10 rounded flex items-center justify-center shrink-0">
                     <HiBriefcase className="text-primary" size={20} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-text-light">Job Type</p>
-                    <p className="text-sm font-medium text-dark">{job.type}</p>
+                    <p className="text-sm font-medium text-dark break-words">{job.type}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-primary/10 rounded flex items-center justify-center shrink-0">
                     <HiLocationMarker className="text-primary" size={20} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-text-light">Location</p>
-                    <p className="text-sm font-medium text-dark">
+                    <p className="text-sm font-medium text-dark break-words">
                       {job.location}
                     </p>
                   </div>
@@ -407,9 +407,9 @@ export default function JobDetailPage() {
                   <div className="w-10 h-10 bg-primary/10 rounded flex items-center justify-center shrink-0">
                     <HiCurrencyDollar className="text-primary" size={20} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-text-light">Salary</p>
-                    <p className="text-sm font-medium text-dark">
+                    <p className="text-sm font-medium text-dark break-words">
                       {job.salary}
                     </p>
                   </div>
@@ -418,9 +418,9 @@ export default function JobDetailPage() {
                   <div className="w-10 h-10 bg-primary/10 rounded flex items-center justify-center shrink-0">
                     <HiClock className="text-primary" size={20} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-text-light">Posted</p>
-                    <p className="text-sm font-medium text-dark">
+                    <p className="text-sm font-medium text-dark break-words">
                       {timeAgo()}
                     </p>
                   </div>
