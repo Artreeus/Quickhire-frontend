@@ -6,6 +6,7 @@ import { Job } from "@/types";
 import { getJobById, submitApplication } from "@/lib/api";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 import {
   HiLocationMarker,
   HiClock,
@@ -131,7 +132,12 @@ export default function JobDetailPage() {
   return (
     <div className="min-h-screen bg-bg-light">
       {/* Header */}
-      <section className="bg-dark py-8 px-6 md:px-[124px]">
+      <motion.section
+        className="bg-dark py-8 px-6 md:px-[124px]"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="max-w-[1440px] mx-auto">
           <button
             onClick={() => router.back()}
@@ -142,22 +148,35 @@ export default function JobDetailPage() {
           </button>
           <div className="flex flex-col md:flex-row md:items-center gap-6">
             {/* Company Logo */}
-            <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shrink-0">
+            <motion.div
+              className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shrink-0"
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.15, type: "spring", stiffness: 260, damping: 20 }}
+            >
               <span
                 className="text-3xl font-bold text-primary"
                 style={{ fontFamily: "var(--font-clash)" }}
               >
                 {job.company.charAt(0)}
               </span>
-            </div>
+            </motion.div>
             <div className="flex-1 min-w-0">
-              <h1
+              <motion.h1
                 className="text-2xl md:text-4xl text-white font-semibold break-words"
                 style={{ fontFamily: "var(--font-clash)" }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
               >
                 {job.title}
-              </h1>
-              <div className="flex flex-wrap items-center gap-3 mt-2 text-white/60 text-sm">
+              </motion.h1>
+              <motion.div
+                className="flex flex-wrap items-center gap-3 mt-2 text-white/60 text-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
                 <span>{job.company}</span>
                 <span className="w-1 h-1 bg-white/40 rounded-full" />
                 <div className="flex items-center gap-1">
@@ -169,24 +188,33 @@ export default function JobDetailPage() {
                   <HiClock size={14} />
                   <span>Posted {timeAgo()}</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
-            <button
+            <motion.button
               onClick={() => setShowApplicationForm(true)}
               className="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-3 transition-colors shrink-0"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.35, type: "spring", stiffness: 260 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
             >
               Apply Now
-            </button>
+            </motion.button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <div className="max-w-[1440px] mx-auto px-6 md:px-[124px] py-10">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
           <div className="flex-1 min-w-0">
             {/* Description */}
-            <div className="bg-white p-6 md:p-8 border border-border mb-6">
+            <motion.div
+              className="bg-white p-6 md:p-8 border border-border mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
               <h2
                 className="text-xl font-semibold text-dark mb-4"
                 style={{ fontFamily: "var(--font-clash)" }}
@@ -196,11 +224,15 @@ export default function JobDetailPage() {
               <p className="text-text leading-relaxed whitespace-pre-line break-words overflow-wrap-anywhere">
                 {job.description}
               </p>
-            </div>
+            </motion.div>
 
             {/* Requirements */}
             {job.requirements.length > 0 && (
-              <div className="bg-white p-6 md:p-8 border border-border mb-6">
+              <motion.div
+                className="bg-white p-6 md:p-8 border border-border mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
                 <h2
                   className="text-xl font-semibold text-dark mb-4"
                   style={{ fontFamily: "var(--font-clash)" }}
@@ -218,14 +250,17 @@ export default function JobDetailPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             )}
 
             {/* Application Form */}
             {showApplicationForm && !applicationSubmitted && (
-              <div
+              <motion.div
                 id="apply-form"
                 className="bg-white p-6 md:p-8 border-2 border-primary"
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
                 <h2
                   className="text-xl font-semibold text-dark mb-6"
@@ -348,12 +383,17 @@ export default function JobDetailPage() {
                     </button>
                   </div>
                 </form>
-              </div>
+              </motion.div>
             )}
 
             {/* Success Message */}
             {applicationSubmitted && (
-              <div className="bg-[#56CDAD]/10 border border-[#56CDAD]/30 p-8 text-center">
+              <motion.div
+                className="bg-[#56CDAD]/10 border border-[#56CDAD]/30 p-8 text-center"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, type: "spring" }}
+              >
                 <HiCheckCircle
                   className="text-[#56CDAD] mx-auto mb-4"
                   size={48}
@@ -368,12 +408,17 @@ export default function JobDetailPage() {
                   Thank you for applying. The hiring team will review your
                   application and get back to you.
                 </p>
-              </div>
+              </motion.div>
             )}
           </div>
 
           {/* Sidebar */}
-          <aside className="lg:w-[320px] shrink-0 min-w-0">
+          <motion.aside
+            className="lg:w-[320px] shrink-0 min-w-0"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
             {/* Job Overview */}
             <div className="bg-white p-6 border border-border mb-6">
               <h3
@@ -469,7 +514,7 @@ export default function JobDetailPage() {
                 </>
               )}
             </div>
-          </aside>
+          </motion.aside>
         </div>
       </div>
     </div>

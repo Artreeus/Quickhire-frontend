@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
+import { motion } from "framer-motion";
 
-/* All icons use currentColor so they automatically inherit CSS color */
 const DesignIcon = () => (
   <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
     <path d="M20 8L8 20L20 32L32 20L20 8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -80,12 +80,33 @@ const categories = [
   { name: "Human Resource", count: 346, icon: HRIcon },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  visible: {
+    opacity: 1, y: 0, scale: 1,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function CategorySection() {
   return (
     <section className="bg-white py-[72px]">
       <div className="max-w-[1440px] mx-auto px-6 md:px-[124px]">
         {/* Header */}
-        <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4">
+        <motion.div
+          className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+        >
           <h2
             className="text-3xl md:text-[48px] leading-[1.1] text-[#25324B]"
             style={{ fontFamily: "var(--font-clash)", fontWeight: 600 }}
@@ -100,55 +121,61 @@ export default function CategorySection() {
             Show all jobs
             <HiArrowRight size={16} />
           </Link>
-        </div>
+        </motion.div>
 
         {/* Category Grid - 4x2 */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {categories.map((cat) => {
             const Icon = cat.icon;
             return (
-              <Link
-                key={cat.name}
-                href={`/jobs?category=${encodeURIComponent(cat.name)}`}
-                className={`group flex flex-col gap-8 p-6 md:p-8 border transition-all cursor-pointer ${
-                  cat.active
-                    ? "bg-[#4640DE] border-[#4640DE] text-white"
-                    : "bg-white border-[#D6DDEB] text-[#4640DE] hover:bg-[#4640DE] hover:border-[#4640DE] hover:text-white"
-                }`}
-              >
-                {/* Icon inherits color via currentColor */}
-                <div className="w-12 h-12">
-                  <Icon />
-                </div>
-                <div className="flex flex-col gap-3">
-                  <h3
-                    className={`text-xl md:text-2xl leading-[1.2] font-semibold ${
-                      cat.active ? "text-white" : "text-[#25324B] group-hover:text-white"
-                    }`}
-                    style={{ fontFamily: "var(--font-clash)" }}
-                  >
-                    {cat.name}
-                  </h3>
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`text-base md:text-lg ${
-                        cat.active ? "text-white/80" : "text-[#7C8493] group-hover:text-white/80"
-                      }`}
-                    >
-                      {cat.count} jobs available
-                    </span>
-                    <HiArrowRight
-                      size={16}
-                      className={`shrink-0 transition-transform group-hover:translate-x-1 ${
-                        cat.active ? "text-white" : "text-[#7C8493] group-hover:text-white"
-                      }`}
-                    />
+              <motion.div key={cat.name} variants={cardVariants}>
+                <Link
+                  href={`/jobs?category=${encodeURIComponent(cat.name)}`}
+                  className={`group flex flex-col gap-8 p-6 md:p-8 border transition-all duration-300 cursor-pointer h-full ${
+                    cat.active
+                      ? "bg-[#4640DE] border-[#4640DE] text-white"
+                      : "bg-white border-[#D6DDEB] text-[#4640DE] hover:bg-[#4640DE] hover:border-[#4640DE] hover:text-white hover:-translate-y-1 hover:shadow-xl"
+                  }`}
+                >
+                  <div className="w-12 h-12 transition-transform duration-300 group-hover:scale-110">
+                    <Icon />
                   </div>
-                </div>
-              </Link>
+                  <div className="flex flex-col gap-3">
+                    <h3
+                      className={`text-xl md:text-2xl leading-[1.2] font-semibold ${
+                        cat.active ? "text-white" : "text-[#25324B] group-hover:text-white"
+                      }`}
+                      style={{ fontFamily: "var(--font-clash)" }}
+                    >
+                      {cat.name}
+                    </h3>
+                    <div className="flex items-center gap-3">
+                      <span
+                        className={`text-base md:text-lg ${
+                          cat.active ? "text-white/80" : "text-[#7C8493] group-hover:text-white/80"
+                        }`}
+                      >
+                        {cat.count} jobs available
+                      </span>
+                      <HiArrowRight
+                        size={16}
+                        className={`shrink-0 transition-transform group-hover:translate-x-1 ${
+                          cat.active ? "text-white" : "text-[#7C8493] group-hover:text-white"
+                        }`}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
